@@ -54,7 +54,7 @@
 
 ---
 
-## 📂 디렉토리 구조 (Directory Structure)
+## 디렉토리 구조 (Directory Structure)
 
 ```bash
 deepgastro/
@@ -124,7 +124,7 @@ deepgastro/
 
 ---
 
-## 🚀 설치 및 실행 방법 (How to Run)
+## 설치 및 실행 방법 (How to Run)
 
 ### 1. 환경 설정 (Installation)
 
@@ -155,7 +155,7 @@ python -m src.run_server_aggregation
 
 ---
 
-## 🔌 백엔드 연동 가이드 (For Backend Developers)
+## 백엔드 연동 가이드 (For Backend Developers)
 
 이 시스템은 웹/앱 서버(Backend)에서 AI 진단 기능을 쉽게 사용할 수 있도록 **독립적인 추론 모듈 (`src/inference.py`)**을 제공합니다.
 
