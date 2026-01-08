@@ -213,7 +213,7 @@ __marimo__/
 ._*
 
 # data 폴더 안의 내용은 무시하되, 폴더 구조만 살림.
-data/
+/data/
 !data/.gitkeep
 
 # 모델 가중치 및 학습 기록 (용량 문제 + 보안)
@@ -232,6 +232,9 @@ test_image.jpg
 *.png
 *.jpg
 *.jpeg
+
+# 테스트용으로 데이터를 split한 split_classification.py 파일 제외
+src/data/split_classification.py
 
 # 사전 학습 결과만 예외적으로 올림.
 !saved_models/pretrained_colon.pth

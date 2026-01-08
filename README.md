@@ -58,10 +58,56 @@ deepgastro/
 │   ├── run_client.py          # [실행] 병원 학습 스크립트
 │   ├── run_server_aggregation.py # [실행] 서버 통합 스크립트
 │   ├── models/                # 모델 아키텍처 정의
+│   │   └── model.py           # 사용 모델(여기선 EfficientNet-B0)정의
 │   └── data/                  # 데이터셋 로더 (Dataset Class)
+│        └── dataset.py        # 데이터셋 및 클래스 맵핑
 ├── requirements.txt           # 의존성 패키지 목록
 └── README.md                  # 프로젝트 설명서
 ```
+
+---
+
+## 데이터셋 정보 (Dataset Information)
+
+본 프로젝트는 **[AI-Hub]**에서 제공하는 **'내시경 이미지 합성데이터 (Endoscopy Generation Data)'**를 기반으로 구축되었습니다.
+
+이 데이터셋은 실제 환자의 내시경 영상을 바탕으로 **생성형 AI(Diffusion Model)를 통해 제작된 고품질 합성 데이터(Synthetic Data)**입니다. 이를 통해 개인정보 침해 및 윤리적 문제없이 자유로운 연구가 가능합니다.
+
+### 1. 데이터 개요 (Overview)
+* [cite_start]**데이터셋명:** 037. 내시경 이미지 합성데이터 (Endoscopy Generation Data) [cite: 8, 46]
+* [cite_start]**대상 장기:** 위(Stomach), 대장(Colon) [cite: 9]
+* [cite_start]**질병 분류:** 궤양(Ulcer), 용종(Polyp), 암(Cancer) [cite: 9]
+* [cite_start]**데이터 형식:** 이미지(.png) + 라벨링(.json) [cite: 10]
+* [cite_start]**원본 해상도:** 2048 x 2048 px (본 모델에서는 224x224로 리사이징하여 사용) [cite: 13, 20]
+
+### 2. 클래스 매핑 (Class Mapping)
+본 프로젝트의 학습 코드(`dataset.py`)는 폴더명의 **가나다순(Alphabetical Order)** 정렬을 기준으로 클래스 ID를 부여합니다. 원본 데이터셋의 ID 체계와 다를 수 있으므로 아래 매핑 테이블을 참고하세요.
+
+| ID | Class Name (KR) | Class Name (EN) | 비고 |
+| :---: | :---: | :---: | :--- |
+| **0** | **궤양** | Ulcer | |
+| **1** | **암** | Cancer | *주의: 가나다순 정렬에 따라 ID 할당* |
+| **2** | **용종** | Polyp | |
+
+### 3. 데이터 전처리 (Preprocessing)
+* **Resize:** `EfficientNet` 입력 규격에 맞춰 **224x224**로 변환
+* **Normalization:** ImageNet 통계값(`mean=[0.485, 0.456, 0.406]`, `std=[0.229, 0.224, 0.225]`) 적용
+* **Augmentation:** RandomHorizontalFlip, RandomRotation, ColorJitter 적용
+
+---
+
+## 데이터셋 출처 및 기여 (Acknowledgements)
+
+본 연구는 **과학기술정보통신부**와 **한국지능정보사회진흥원(NIA)**이 주관한 **[AI-Hub]**의 구축 데이터를 활용하였습니다.
+
+* [cite_start]**주관기관:** 양산부산대학교병원 (Yangsan Pusan National University Hospital) [cite: 3, 17]
+* [cite_start]**참여기관:** 경북대학교 산학협력단(AI모델), (주)서르(데이터 구축), (주)캡토스(데이터 활용) 등 
+* **데이터 링크:** [AI-Hub 내시경 이미지 합성데이터 바로가기](https://www.aihub.or.kr/aihubdata/data/view.do?srchOptnCnd=OPTNCND001&currMenu=115&topMenu=100&searchKeyword=%EB%82%B4%EC%8B%9C%EA%B2%BD&aihubDataSe=data&dataSetSn=71666)
+
+> **License & Compliance Notice:**
+> 본 프로젝트는 AI-Hub의 이용 약관 및 개인정보보호법을 준수합니다.
+> 1. **제3자 이전 금지:** 학습에 사용된 원본/합성 데이터셋(이미지, 라벨)은 본 리포지토리에 포함되지 않았습니다 (`.gitignore` 적용).
+> 2. **사용 문의:** 데이터셋이 필요하신 연구자는 [AI-Hub](https://www.aihub.or.kr/)에서 직접 사용 신청을 하셔야 합니다.
 
 ---
 
@@ -152,3 +198,4 @@ print(result_text)
 
 - **AI Part Lead:** [Jadest03] (Lead Researcher & Architect)
 - **Organization:** DeepGastro Research Team
+
