@@ -1,4 +1,4 @@
-# DeepGastro: Federated Learning for Gastrointestinal Endoscopy
+# BFL System - Blockchain-based Federated Learning AI Research
 **(내시경 진단을 위한 프라이버시 보존형 연합학습 시스템)**
 
 > **Target Organs:** Stomach (위), Colon (대장)  
