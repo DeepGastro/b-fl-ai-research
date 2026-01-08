@@ -1,8 +1,4 @@
 # BFL System - Blockchain-based Federated Learning AI Research
-**(내시경 진단을 위한 프라이버시 보존형 연합학습 시스템)**
-
-> **Target Organs:** Stomach (위), Colon (대장)  
-> **Diagnosis Classes:** Ulcer(궤양), Cancer(암), Polyp(용종)
 
 ---
 
@@ -17,6 +13,8 @@
 ### Target Organs & Classes
 
 본 모델은 **위(Stomach)**와 **대장(Colon)** 두 가지 장기에 대해 각각 **3개의 병변 클래스**를 분류하도록 설계되었습니다.
+> **Target Organs:** Stomach (위), Colon (대장)  
+> **Diagnosis Classes:** Ulcer(궤양), Cancer(암), Polyp(용종)
 
 | Target Organ | Class Names (KR/EN) | Class ID (Label) | Description |
 | :---: | :--- | :---: | :--- |
