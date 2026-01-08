@@ -205,3 +205,34 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# =================================
+
+# Mac 시스템 파일 (지저분한 파일 제거)
+.DS_Store
+._*
+
+# data 폴더 안의 내용은 무시하되, 폴더 구조만 살림.
+data/
+!data/.gitkeep
+
+# 모델 가중치 및 학습 기록 (용량 문제 + 보안)
+saved_models/
+
+# 혹시 다른 곳에 있을지 모를 가중치 파일들도 원천 차단
+*.pth
+*.pt
+*.ckpt
+
+# 결과 메타데이터
+*_update.json
+
+# 로컬 테스트 이미지 (Inference 테스트용)
+test_image.jpg
+*.png
+*.jpg
+*.jpeg
+
+# 사전 학습 결과만 예외적으로 올림.
+!saved_models/pretrained_colon.pth
+!saved_models/pretrained_stomach.pth
