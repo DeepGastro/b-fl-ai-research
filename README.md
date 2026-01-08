@@ -75,15 +75,15 @@ git clone [https://github.com/DeepGastro/b-fl-ai-research.git](https://github.co
 cd b-fl-ai-research
 ```
 
-# 패키지 설치
+### 2. 패키지 설치
 ```
 pip install -r requirements.txt
 ```
 
-### 2. 연합학습 실행 (Federated Learning Simulation)
+### 3. 연합학습 실행 (Federated Learning Simulation)
 
 **Step A. 병원(Client) 학습 시작**
-병원 A가 **대장(Colon)** 데이터를 이용해 학습을 수행합니다. (Round 1)
+병원 A가 **대장(Colon)** 혹은 **위장(Stomach)** 데이터를 이용해 학습을 수행합니다.
 ```bash
 python -m src.run_client --id hospital_a --organ colon
 ```
@@ -106,7 +106,7 @@ python -m src.run_server_aggregation
 - **입력 유연성:** 파일 경로(`str`) 또는 이미지 객체(`PIL.Image`) 모두 지원.
 
 ### 사용 예시 코드
-백엔드 서버 코드(예: FastAPI, Django)에서 다음과 같이 호출하여 사용하세요.
+백엔드 서버 코드에서 다음과 같이 호출하여 사용할 수 있습니다.
 
 ```python
 from src.inference import GastroPredictor
@@ -127,7 +127,7 @@ print(result_text)
 
 ---
 
-## 📊 FedAvg 알고리즘 상세 (Algorithm Details)
+## FedAvg 알고리즘 상세 (Algorithm Details)
 
 본 프로젝트에 적용된 알고리즘의 수식적 배경은 다음과 같습니다.
 
@@ -141,14 +141,14 @@ print(result_text)
 
 ---
 
-## ⚠️ 보안 및 주의사항 (Security Note)
+## 보안 및 주의사항 (Security Note)
 
 - **데이터 보안:** 본 리포지토리에는 환자의 개인정보가 포함된 **이미지 데이터(Raw Data)는 포함되어 있지 않습니다.** (`.gitignore` 적용됨)
 - **모델 가중치:** 학습된 `.pth` 파일은 보안 및 용량 문제로 업로드되지 않으며, 재현성을 위한 **Pretrained 초기 모델**만 제공됩니다.
 
 ---
 
-## 👨‍💻 Maintainers
+## Maintainers
 
-- **AI Part Lead:** [Mingyu] (Lead Researcher & Architect)
+- **AI Part Lead:** [Jadest03] (Lead Researcher & Architect)
 - **Organization:** DeepGastro Research Team
