@@ -14,6 +14,19 @@
 
 ---
 
+### Target Organs & Classes
+
+본 모델은 **위(Stomach)**와 **대장(Colon)** 두 가지 장기에 대해 각각 **3개의 병변 클래스**를 분류하도록 설계되었습니다.
+
+| Target Organ | Class Names (KR/EN) | Class ID (Label) | Description |
+| :---: | :--- | :---: | :--- |
+| **Stomach**<br>(위) | • **궤양** (Ulcer)<br>• **암** (Cancer)<br>• **용종** (Polyp) | `0`<br>`1`<br>`2` | 위 내시경 이미지 기반 병변 분류 |
+| **Colon**<br>(대장) | • **궤양** (Ulcer)<br>• **암** (Cancer)<br>• **용종** (Polyp) | `0`<br>`1`<br>`2` | 대장 내시경 이미지 기반 병변 분류 |
+
+> **Note:** Class ID는 폴더명의 가나다순 정렬(`sorted`)에 따라 **0:궤양, 1:암, 2:용종**으로 자동 할당됩니다.
+
+---
+
 ## 시스템 아키텍처 (System Architecture)
 
 본 시스템은 **Central Server(중앙 서버)**와 **Client Hospitals(참여 병원)** 간의 **Hub-and-Spoke** 구조로 동작합니다.
@@ -83,11 +96,11 @@ deepgastro/
 ### 2. 클래스 매핑 (Class Mapping)
 본 프로젝트의 학습 코드(`dataset.py`)는 폴더명의 **가나다순(Alphabetical Order)** 정렬을 기준으로 클래스 ID를 부여합니다. 원본 데이터셋의 ID 체계와 다를 수 있으므로 아래 매핑 테이블을 참고하세요.
 
-| ID | Class Name (KR) | Class Name (EN) | 비고 |
-| :---: | :---: | :---: | :--- |
-| **0** | **궤양** | Ulcer | |
-| **1** | **암** | Cancer | *주의: 가나다순 정렬에 따라 ID 할당* |
-| **2** | **용종** | Polyp | |
+| ID | Class Name (KR) | Class Name (EN) |
+| :---: | :---: | :---: | 
+| **0** | **궤양** | Ulcer |
+| **1** | **암** | Cancer | 
+| **2** | **용종** | Polyp |
 
 ### 3. 데이터 전처리 (Preprocessing)
 * **Resize:** `EfficientNet` 입력 규격에 맞춰 **224x224**로 변환
