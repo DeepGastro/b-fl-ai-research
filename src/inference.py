@@ -4,6 +4,11 @@ from PIL import Image
 from pathlib import Path
 from src.models.model import GastroNet
 
+'''
+해당 파일은 각 client에서 병명을 추론하는 코드입니다.
+사진을 넣으면 병명과 확률을 반환합니다.
+'''
+
 class GastroPredictor:
     def __init__(self, target_organ):
         self.target_organ = target_organ

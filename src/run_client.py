@@ -6,6 +6,17 @@ import datetime
 from pathlib import Path
 from src.client import GastroClient
 
+'''
+run_client.py파일은 각 client에서 훈련을 할 때 사용합니다.
+main_weights 경로에서 서버로 부터 받은 가중치를 불러옵니다.
+만약 맨 처음 라운드(pre-trained된 가중치)인 경우에는 해당 가중치를 가져옵니다.
+이후 각 client에서 각자의 데이터로 학습을 진행합니다.
+학습한 이후에는 가중치와 메타데이터 반환하고 이를 해당 경로에 저장합니다.
+
+실행 예시
+python -m src.run_client --id hospital_a --organ colon
+'''
+
 def run_client_training(client_id, target_organ, epochs=1):
     # 경로 설정
     current_path = Path(__file__).resolve()

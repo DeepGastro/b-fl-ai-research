@@ -4,6 +4,13 @@ from src.models.model import GastroNet
 from src.server import GastroServer
 import datetime
 
+'''
+해당 파일은 메인 서버에서 돌리는 코드입니다.
+실행시 받은 가중치들은 한 번에 모아서 평균을 내고 해당 가중치를 저장(덮어쓰움)합니다.
+나온 가중치를 각 client에 보내면 됩니다.
+archive에 백업도 할 수 있는 기능도 있습니다.
+'''
+
 def run_aggregation(target_organ):
     # 경로 설정
     current_path = Path(__file__).resolve()

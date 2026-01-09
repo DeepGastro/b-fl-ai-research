@@ -9,6 +9,11 @@ from pathlib import Path
 from src.models.model import GastroNet
 from src.data.dataset import GastroDataset
 
+'''
+pretrain.py는 사전 학습용 파일이며 해당 파일로 부터 pre-trained된 가중치를 얻습니다.
+설정한 경로에 가중치 파일을 저장하며 이를 맨 처음 메인 서버에서 각 clinet에 보냅니다.
+'''
+
 def pretraining(target_organ, epochs=20, batch_size=32):
     # 디바이스 정의
     if torch.backends.mps.is_available():

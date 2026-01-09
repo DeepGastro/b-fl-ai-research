@@ -39,38 +39,3 @@ class GastroServer:
                 avg_weights[key] += weights_list[i][key]
             avg_weights[key] = torch.div(avg_weights[key], len(weights_list))
         return avg_weights
-
-    def train_round(self, round_num, local_epochs=1):
-        print(f"\n[연합 학습 진행 : Round {round_num}]")
-        
-        global_weights = self.global_model.state_dict()
-        collected_weights = []
-        
-        for client in self.clients:
-            client.set_weights(global_weights)
-            client.train(epochs=local_epochs)
-            client.evaluate() 
-            collected_weights.append(client.get_weights())
-        
-        new_global_weights = self.aggregate_weights(collected_weights)
-        self.global_model.load_state_dict(new_global_weights)
-        print(f"Round {round_num} 완료. 글로벌 모델 업데이트됨")
-
-if __name__ == "__main__":
-    current_path = Path(__file__).resolve()
-    project_root = current_path.parent.parent
-    data_root = project_root / "data" / "raw"
-    
-    TARGET_ORGAN = "stomach"  # 혹은 "colon"
-    # TARGET_ORGAN = "colon"
-
-    print(f"{TARGET_ORGAN} 모델 초기화")
-    global_model = GastroNet(num_classes=3, pretrained=True)
-    
-    server = GastroServer(global_model, ["hospital_a", "hospital_b", "hospital_c"], str(data_root), TARGET_ORGAN)
-    
-    # 연합 학습 3라운드 진행
-    for r in range(1, 4):
-        server.train_round(round_num=r, local_epochs=1)
-        
-    print("\n모든 학습 종료")
