@@ -1,41 +1,44 @@
 import torch
 import copy
 from pathlib import Path
-from src.models.model import GastroNet
-from src.client import GastroClient
 
 class GastroServer:
-    def __init__(self, global_model, client_ids, data_root, target_organ):
+    def __init__(self, global_model, data_root, target_organ):
         self.global_model = global_model
-        self.client_ids = client_ids
         
-        # 가중치 파일 불러오기 : pretrained_stomach.pth 또는 pretrained_colon.pth
-        save_dir = Path(data_root).parent.parent / "saved_models"
-        model_name = f"pretrained_{target_organ}.pth" 
-        model_path = save_dir / model_name
-        
-        print(f"현재 타겟 장기: {target_organ.upper()}")
-        
-        if model_path.exists():
-            loaded_weights = torch.load(model_path)
-            self.global_model.load_state_dict(loaded_weights)
-            print("가중치 로드됨.")
-        else:
-            print("로드 실패")
+        # run_server.py에서 data_root를 "."(dummy)로 넘길 때를 대비해 에러 방지 처리
+        try:
+            save_dir = Path(data_root).parent.parent / "saved_models"
+            model_name = f"pretrained_{target_organ}.pth" 
+            model_path = save_dir / model_name
             
-        # 클라이언트(병원) 생성
-        self.clients = []
-        for c_id in client_ids:
-            # data/raw/{target_organ}/federated/{hospital}/images
-            c_data_dir = f"{data_root}/{target_organ}/federated/{c_id}/images"
-            client = GastroClient(client_id=c_id, data_dir=c_data_dir)
-            self.clients.append(client)
+            # 파일이 진짜 있을 때만 로드
+            if model_path.exists():
+                # 안전하게 CPU로 로드
+                loaded_weights = torch.load(model_path, map_location='cpu')
+                self.global_model.load_state_dict(loaded_weights)
+            else:
+                pass 
+
+        except Exception:
+            pass
 
     def aggregate_weights(self, weights_list):
-        # FedAvg 알고리즘
+        """
+        FedAvg 알고리즘: 수집된 가중치 리스트(weights_list)를 평균 냅니다.
+        """
+        if not weights_list:
+            return None
+        
+        # 첫 번째 가중치를 기준(Base)으로 복사
         avg_weights = copy.deepcopy(weights_list[0])
+        
+        # 나머지 가중치들을 모두 더함
         for key in avg_weights.keys():
             for i in range(1, len(weights_list)):
                 avg_weights[key] += weights_list[i][key]
+            
+            # 전체 개수로 나누어 평균 계산
             avg_weights[key] = torch.div(avg_weights[key], len(weights_list))
+            
         return avg_weights
